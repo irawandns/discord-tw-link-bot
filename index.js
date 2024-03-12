@@ -43,7 +43,7 @@ client.on("messageCreate", async (msg) => {
 
     if (response) {
       // await msg.channel.send(response);
-      const messsageString = `from ${msg.author} \n [link](${response})`
+      const messsageString = `from ${msg.author} [link](${response})`
       await msg.channel.send(messsageString);
       // await msg.suppressEmbeds(true);
       await msg.delete();
