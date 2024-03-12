@@ -20,7 +20,6 @@ const client = new Client({
 });
 const regex = /(https?:\/\/(?:www\.)?(?:twitter|x)\.com\/\S+)/g;
 const token = process.env.DISCORD_BOT_SECRET;
-console.log(token, 'token')
 const processedMessages = new Set();
 
 client.on("ready", () => {
@@ -29,10 +28,10 @@ client.on("ready", () => {
 });
 
 client.on("messageCreate", async (msg) => {
-  if (msg.author.bot || processedMessages.has(msg.id)) return; // Ignore messages from bots or already processed messages
+  if (msg.author.bot || processedMessages.has(msg.id)) return;
 
   const matches = msg.content.match(regex);
-  if (!matches) return; // No matches found, exit
+  if (!matches) return;
 
   matches.forEach(async (match) => {
     let response;
@@ -44,12 +43,10 @@ client.on("messageCreate", async (msg) => {
 
     if (response) {
       // await msg.channel.send(response);
-      await msg.reply(response);
-      // Remove the embed from the original message
-      // Filter out the embeds from the original message
-      await msg.suppressEmbeds(true);
-
-      // await msg.delete();
+      const messsageString = `from ${msg.author} \n [link](${response})`
+      await msg.channel.send(messsageString);
+      // await msg.suppressEmbeds(true);
+      await msg.delete();
     }
     processedMessages.add(msg.id);
   });
